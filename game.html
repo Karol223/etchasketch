@@ -1,53 +1,55 @@
 <!DOCTYPE html>
 <style>
 :root {
+  text-align: center;
   --grid-cols: 1;
   --grid-rows: 1;
 }
 
 #container {
+  margin: auto;
   display: grid;
-  grid-gap: 1em;
   grid-template-rows: repeat(var(--grid-rows), 1fr);
   grid-template-columns: repeat(var(--grid-cols), 1fr);
+  height: 600px;
+  width: 600px;
+  border: 2px solid;
 }
-
-.grid-item {
-  padding: 1em;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.grid-item:hover {
-  background-color: black;
-}
-
 </style>
 <html>
 
 <head>
 <title>Etch - a - Sketch</title>
-<meta charset="UTF-8"/>
 </head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <body>
-  <h2>Do you want to play a game ? </h2>
+    <h2>Do you want to play a game ? </h2>
   <div id="container">
 </div> 
+<button><strong>Set grid</strong></button>
 <script>
-// container 
-const container = document.getElementById("container");
+const container = document.querySelector("#container");
+const resetBtn = document.querySelector("button");
+resetBtn.addEventListener("click", function () {
+  container.textContent = "";
+  resize = prompt("Enter number for new grid size");
+  makeGrid(resize, resize);
+});
 
-function makeRows(rows, cols) {
-  container.style.setProperty('--grid-rows', rows);
-  container.style.setProperty('--grid-cols', cols);
-  for (c = 0; c < (rows * cols); c++) {
+function makeGrid(rows = 16, cols = 16) {
+  container.style.setProperty("--grid-rows", rows);
+  container.style.setProperty("--grid-cols", cols);
+  for (cells = 0; cells < rows * cols; cells++) {
     let cell = document.createElement("div");
-    cell.innerText = (c + 1);
-    container.appendChild(cell).className = "grid-item";
-  };
-};
+    cell.addEventListener("mouseover", function () {
+      cell.style.backgroundColor = "black";
+    });
+    container.appendChild(cell);
+  }
+}
 
-makeRows(16, 16);
+makeGrid();
 
 
 </script>
